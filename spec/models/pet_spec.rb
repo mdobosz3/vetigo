@@ -10,4 +10,9 @@ RSpec.describe Pet, type: :model do
     pet = build(:pet, name: nil)
     expect(pet).not_to be_valid
   end
+
+  it "is not valid without an owner" do
+    pet = build(:pet, owner: nil)
+    expect(pet).not_to be_valid
+  end
 end
