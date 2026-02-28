@@ -10,17 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_26_195106) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_28_121223) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "clinics", force: :cascade do |t|
+    t.string "address"
+    t.string "city"
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
   create_table "owners", force: :cascade do |t|
+    t.bigint "clinic_id", null: false
     t.datetime "created_at", null: false
     t.string "email"
     t.string "first_name"
     t.string "last_name"
     t.string "phone"
     t.datetime "updated_at", null: false
+    t.index ["clinic_id"], name: "index_owners_on_clinic_id"
   end
 
   create_table "pets", force: :cascade do |t|
@@ -34,5 +44,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_26_195106) do
     t.index ["owner_id"], name: "index_pets_on_owner_id"
   end
 
+  add_foreign_key "owners", "clinics"
   add_foreign_key "pets", "owners"
 end
