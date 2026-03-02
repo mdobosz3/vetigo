@@ -12,5 +12,6 @@ class Avo::Resources::Pet < Avo::BaseResource
     field :breed, as: :text
     field :age, as: :number
     field :owner, as: :belongs_to
+    field :appointments, as: :has_many
   end
 end

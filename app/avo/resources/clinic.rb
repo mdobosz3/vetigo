@@ -12,6 +12,8 @@ class Avo::Resources::Clinic < Avo::BaseResource
     field :name, as: :text
     field :address, as: :text
     field :city, as: :text
+
     field :owners, as: :has_many
+    field :vets, as: :has_many
   end
 end

@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_28_121223) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_02_174410) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "appointments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "pet_id", null: false
+    t.string "reason"
+    t.datetime "scheduled_at"
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.bigint "vet_id", null: false
+    t.index ["pet_id"], name: "index_appointments_on_pet_id"
+    t.index ["vet_id"], name: "index_appointments_on_vet_id"
+  end
 
   create_table "clinics", force: :cascade do |t|
     t.string "address"
@@ -44,6 +56,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_28_121223) do
     t.index ["owner_id"], name: "index_pets_on_owner_id"
   end
 
+  create_table "vets", force: :cascade do |t|
+    t.bigint "clinic_id", null: false
+    t.datetime "created_at", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "specialization"
+    t.datetime "updated_at", null: false
+    t.index ["clinic_id"], name: "index_vets_on_clinic_id"
+  end
+
+  add_foreign_key "appointments", "pets"
+  add_foreign_key "appointments", "vets"
   add_foreign_key "owners", "clinics"
   add_foreign_key "pets", "owners"
+  add_foreign_key "vets", "clinics"
 end
