@@ -1,6 +1,7 @@
 class Vet < ApplicationRecord
   belongs_to :clinic
   has_many :appointments, dependent: :destroy
+  belongs_to :user
 
   validates :first_name, presence: true
   validates :last_name, presence: true

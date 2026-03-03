@@ -71,3 +71,5 @@ group :test do
 end
 
 gem "avo", "~> 3.29"
+
+gem "devise", "~> 5.0"

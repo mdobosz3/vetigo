@@ -10,7 +10,14 @@ end
 
 new_clinics.each do |clinic|
   vets = 3.times.map do
+    vet_user = User.create!(
+      email: Faker::Internet.unique.email,
+      password: 'password123',
+      password_confirmation: 'password123'
+    )
+
     clinic.vets.create!(
+      user: vet_user,
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
       specialization: [ "Cardiologist", "Surgeon", "Dentist", "General Practice", "Dermatologist" ].sample
@@ -21,7 +28,7 @@ new_clinics.each do |clinic|
     owner = clinic.owners.create!(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
-      email: Faker::Internet.email,
+      email: Faker::Internet.unique.email,
       phone: Faker::PhoneNumber.phone_number
     )
 
@@ -54,3 +61,4 @@ puts "Vets: #{Vet.count}"
 puts "Owners: #{Owner.count}"
 puts "Pets: #{Pet.count}"
 puts "Appointments: #{Appointment.count}"
+puts "Users: #{User.count}"
