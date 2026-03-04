@@ -1,10 +1,16 @@
 class Avo::Resources::Vet < Avo::BaseResource
-  # self.includes = []
-  # self.attachments = []
-  # self.search = {
-  #   query: -> { query.ransack(id_eq: q, m: "or").result(distinct: false) }
-  # }
   self.title = :full_name
+  self.includes = []
+
+  self.index_query = -> do
+    if current_user.admin?
+      query
+    elsif current_user.vet.present?
+      query.where(clinic_id: current_user.vet.clinic_id)
+    else
+      query.none
+    end
+  end
 
   def fields
     field :id, as: :id

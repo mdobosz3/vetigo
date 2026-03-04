@@ -1,9 +1,13 @@
 class Avo::Resources::Pet < Avo::BaseResource
-  # self.includes = []
-  # self.attachments = []
-  # self.search = {
-  #   query: -> { query.ransack(id_eq: q, m: "or").result(distinct: false) }
-  # }
+  self.index_query = -> do
+    if current_user.admin?
+      query
+    elsif current_user.vet.present?
+      query.joins(:owner).where(owners: { clinic_id: current_user.vet.clinic_id })
+    else
+      query.none
+    end
+  end
 
   def fields
     field :id, as: :id
