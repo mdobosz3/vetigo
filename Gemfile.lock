@@ -106,7 +106,7 @@ GEM
     bindex (0.8.1)
     bootsnap (1.23.0)
       msgpack (~> 1.2)
-    brakeman (8.0.2)
+    brakeman (8.0.4)
       racc
     builder (3.3.0)
     bundler-audit (0.9.3)
@@ -396,12 +396,12 @@ GEM
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.2.0)
-    tailwindcss-rails (4.4.0)
+    tailwindcss-rails (3.3.2)
       railties (>= 7.0.0)
-      tailwindcss-ruby (~> 4.0)
-    tailwindcss-ruby (4.2.0-aarch64-linux-gnu)
-    tailwindcss-ruby (4.2.0-arm64-darwin)
-    tailwindcss-ruby (4.2.0-x86_64-linux-gnu)
+      tailwindcss-ruby (~> 3.0)
+    tailwindcss-ruby (3.4.19-aarch64-linux)
+    tailwindcss-ruby (3.4.19-arm64-darwin)
+    tailwindcss-ruby (3.4.19-x86_64-linux)
     thor (1.5.0)
     thruster (0.1.18-aarch64-linux)
     thruster (0.1.18-arm64-darwin)
@@ -443,6 +443,7 @@ GEM
 PLATFORMS
   aarch64-linux
   arm64-darwin-24
+  arm64-darwin-25
   x86_64-linux
 
 DEPENDENCIES
@@ -470,7 +471,7 @@ DEPENDENCIES
   solid_cache
   solid_queue
   stimulus-rails
-  tailwindcss-rails
+  tailwindcss-rails (~> 3.3.1)
   thruster
   turbo-rails
   tzinfo-data
