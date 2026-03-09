@@ -7,7 +7,7 @@ class Appointment < ApplicationRecord
 
   validates :status, presence: true, inclusion: { in: %w[scheduled completed cancelled] }
 
-  validate :scheduled_at_cannot_be_in_the_past
+  validate :scheduled_at_cannot_be_in_the_past, on: :create
 
   private
 

@@ -7,6 +7,10 @@ class Avo::Resources::Appointment < Avo::BaseResource
     filter Avo::Filters::AppointmentStatus
   end
 
+  def actions
+    action Avo::Actions::UpdateAppointmentStatus
+  end
+
   self.index_query = -> do
     if current_user.admin?
       query.order(scheduled_at: :asc)
