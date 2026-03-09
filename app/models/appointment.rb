@@ -1,6 +1,7 @@
 class Appointment < ApplicationRecord
   belongs_to :pet
   belongs_to :vet
+  has_one :medical_record, dependent: :destroy
 
   validates :reason, presence: true
   validates :scheduled_at, presence: true
@@ -15,5 +16,9 @@ class Appointment < ApplicationRecord
     if scheduled_at.present? && scheduled_at < Time.current
       errors.add(:scheduled_at, "can't be in the past")
     end
+  end
+
+  def display_name
+    "#{scheduled_at.strftime("%Y-%m-%d %H:%M")} | #{pet.name} (Vet: #{vet.full_name})"
   end
 end

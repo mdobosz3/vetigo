@@ -1,5 +1,5 @@
 class Avo::Resources::Appointment < Avo::BaseResource
-  self.title = :id
+  self.title = :display_name
   self.includes = []
 
   def filters
@@ -29,5 +29,6 @@ class Avo::Resources::Appointment < Avo::BaseResource
 
     field :pet, as: :belongs_to
     field :vet, as: :belongs_to
+    field :medical_record, as: :has_one
   end
 end

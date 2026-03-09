@@ -17,5 +17,6 @@ class Avo::Resources::Pet < Avo::BaseResource
     field :age, as: :number
     field :owner, as: :belongs_to
     field :appointments, as: :has_many
+    field :medical_records, as: :has_many
   end
 end
