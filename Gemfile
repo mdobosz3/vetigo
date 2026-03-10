@@ -70,6 +70,6 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "avo", "~> 3.29"
+gem "avo", "~> 3.30"
 
 gem "devise", "~> 5.0"
