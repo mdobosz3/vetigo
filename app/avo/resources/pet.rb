@@ -9,6 +9,8 @@ class Avo::Resources::Pet < Avo::BaseResource
     end
   end
 
+  self.title = :name_with_species
+
   def fields
     field :id, as: :id
     field :name, as: :text

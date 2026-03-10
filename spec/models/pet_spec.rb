@@ -15,4 +15,11 @@ RSpec.describe Pet, type: :model do
     pet = build(:pet, owner: nil)
     expect(pet).not_to be_valid
   end
+
+  describe "#name_with_species" do
+    it "returns the name and species formatted correctly" do
+      pet = build(:pet, name: "Riley", species: "Dog")
+      expect(pet.name_with_species).to eq("Riley (Dog)")
+    end
+  end
 end

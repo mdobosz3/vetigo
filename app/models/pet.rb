@@ -5,4 +5,8 @@ class Pet < ApplicationRecord
 
   validates :name, presence: true
   validates :species, presence: true
+
+  def name_with_species
+    "#{name} (#{species})"
+  end
 end

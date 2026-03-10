@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :medical_record do
-    pet { nil }
-    appointment { nil }
-    symptoms { "MyText" }
-    treatment { "MyText" }
+    association :pet
+    association :appointment
+    symptoms { "Lethargy and loss of appetite." }
+    treatment { "Prescribed vitamins and recommended rest." }
   end
 end
