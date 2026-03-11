@@ -1,42 +1,63 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<style>
+  /* Używamy tych samych stylów co powyżej */
+  body { background-color: #f3f4f6; font-family: system-ui, -apple-system, sans-serif; }
+  .login-container { max-width: 450px; margin: 5vh auto; background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+  .login-container h2 { text-align: center; color: #111827; margin-bottom: 2rem; font-weight: 700; }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label { display: block; margin-bottom: 0.5rem; color: #374151; font-weight: 600; font-size: 0.875rem; }
+  .form-group input[type="email"], .form-group input[type="password"] { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
+  .btn-primary { width: 100%; background-color: #3b82f6; color: white; padding: 0.75rem; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+  .btn-danger { background-color: transparent; color: #ef4444; border: 1px solid #ef4444; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.875rem; transition: all 0.2s; }
+  .btn-danger:hover { background-color: #ef4444; color: white; }
+  .section-divider { border-top: 1px solid #e5e7eb; margin: 2rem 0; padding-top: 1rem; }
+</style>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<div class="login-container">
+  <h2>Edytuj swój profil</h2>
 
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
-  </div>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <div class="form-group">
+      <%= f.label :email, "Adres Email" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div style="font-size: 0.875rem; color: #6b7280; margin-bottom: 1rem;">
+        Oczekiwanie na potwierdzenie dla: <%= resource.unconfirmed_email %>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :password, "Nowe hasło" %> 
+      <i style="font-size: 0.75rem; color: #6b7280;">(zostaw puste, jeśli nie chcesz zmieniać)</i>
+      <%= f.password_field :password, autocomplete: "new-password" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation, "Potwierdź nowe hasło" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :current_password, "Aktualne hasło" %> 
+      <i style="font-size: 0.75rem; color: #6b7280;">(potrzebne do zatwierdzenia zmian)</i>
+      <%= f.password_field :current_password, autocomplete: "current-password" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Zapisz zmiany", class: "btn-primary" %>
+    </div>
   <% end %>
 
-  <div class="field">
-    <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i></p>
-    <p><%= f.password_field :password, autocomplete: "new-password" %></p>
-    <% if @minimum_password_length %>
-      <p><em><%= @minimum_password_length %> characters minimum</em></p>
-    <% end %>
+  <div class="section-divider">
+    <h3 style="font-size: 1rem; color: #111827; margin-bottom: 1rem;">Strefa bezpieczeństwa</h3>
+    <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 1rem;">Chcesz usunąć swoje konto? Ta operacja jest nieodwracalna.</p>
+    <%= button_to "Usuń moje konto", registration_path(resource_name), data: { confirm: "Jesteś pewien?", turbo_confirm: "Jesteś pewien?" }, method: :delete, class: "btn-danger" %>
   </div>
 
-  <div class="field">
-    <p><%= f.label :password_confirmation %></p>
-    <p><%= f.password_field :password_confirmation, autocomplete: "new-password" %></p>
+  <div class="login-links">
+    <%= link_to "← Powrót", :back %>
   </div>
-
-  <div class="field">
-    <p><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i></p>
-    <p><%= f.password_field :current_password, autocomplete: "current-password" %></p>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+</div>

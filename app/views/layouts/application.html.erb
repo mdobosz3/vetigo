@@ -3,30 +3,45 @@
   <head>
     <title><%= content_for(:title) || "Vetigo" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Vetigo">
-    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-    <p class="notice" style="color: green"><%= notice %></p>
-    <p class="alert" style="color: red"><%= alert %></p>
+  <body class="bg-gray-50">
+    <nav style="background: white; border-bottom: 1px solid #e5e7eb; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000;">
+      <a href="/" style="font-size: 1.5rem; font-weight: bold; color: #2563eb; text-decoration: none;">Vetigo</a>
+      
+      <div>
+        <% if user_signed_in? %>
+          <span style="margin-right: 15px; font-size: 0.9rem; color: #4b5563;">
+            Zalogowany: <b><%= current_user.email %></b>
+          </span>
+          <%= link_to "Wyloguj", destroy_user_session_path, data: { turbo_method: :delete }, style: "color: #ef4444; text-decoration: none; font-weight: 500;" %>
+        <% else %>
+          <%= link_to "Zaloguj się", new_user_session_path, style: "margin-right: 15px; color: #374151; text-decoration: none; font-weight: 500;" %>
+          <%= link_to "Zarejestruj się", new_user_registration_path, style: "background: #2563eb; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 500;" %>
+        <% end %>
+      </div>
+    </nav>
+
+    <% if notice.present? %>
+      <p class="notice" style="text-align: center; background: #dcfce7; color: #166534; padding: 10px; margin: 0;"><%= notice %></p>
+    <% end %>
+    <% if alert.present? %>
+      <p class="alert" style="text-align: center; background: #fee2e2; color: #991b1b; padding: 10px; margin: 0;"><%= alert %></p>
+    <% end %>
+
+    <main class="container mx-auto px-5 block">
       <%= yield %>
     </main>
   </body>

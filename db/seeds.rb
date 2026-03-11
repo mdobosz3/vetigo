@@ -1,11 +1,22 @@
-puts "Creating new Clinics with full staff and patients..."
+puts "Cleaning up database..."
+Appointment.destroy_all
+Pet.destroy_all
+Owner.destroy_all
+Vet.destroy_all
+Clinic.destroy_all
+User.destroy_all
 
-new_clinics = 2.times.map do
-  Clinic.create!(
-    name: "#{Faker::Company.name} Veterinary Hospital",
-    address: Faker::Address.street_address,
-    city: Faker::Address.city
-  )
+puts "Creating new Clinics with real addresses, full staff, and patients..."
+
+real_clinics_data = [
+  { name: "Śródmieście Vet Center", address: "Marszałkowska 1", city: "Warszawa" },
+  { name: "Klinika Złota Łapa", address: "Złota 44", city: "Warszawa" },
+  { name: "Mokotów Animal Hospital", address: "Puławska 10", city: "Warszawa" },
+  { name: "Praga Vet Care", address: "Targowa 20", city: "Warszawa" }
+]
+
+new_clinics = real_clinics_data.map do |clinic_data|
+  Clinic.create!(clinic_data)
 end
 
 new_clinics.each do |clinic|
