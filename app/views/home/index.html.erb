@@ -5,7 +5,6 @@
 
   .map-wrapper { max-width: 1200px; margin: 0 auto 50px; padding: 0 15px; }
 
-  /* Gwarantujemy wysokość mapy */
   #map { 
     height: 600px !important; 
     width: 100% !important; 
@@ -16,7 +15,6 @@
     display: block !important;
   }
 
-  /* Styl dla Twojej pozycji */
   .user-pos { background: #3b82f6; border: 2px solid white; border-radius: 50%; box-shadow: 0 0 10px rgba(59,130,246,0.6); }
 </style>
 
@@ -26,7 +24,7 @@
 </div>
 
 <div class="map-wrapper">
-  <div id="map" data-clinics="<%= @clinics.to_json(only: [:name, :latitude, :longitude, :address, :city]) %>"></div>
+  <div id="map" data-clinics="<%= @clinics.to_json(only: [:id, :name, :latitude, :longitude, :address, :city]) %>"></div>
 </div>
 
 <script>
@@ -34,7 +32,6 @@
     const mapElement = document.getElementById('map');
     if (!mapElement || mapElement._leaflet_id) return;
 
-    // Pobranie danych klinik
     let clinics = [];
     try {
       clinics = JSON.parse(mapElement.getAttribute('data-clinics')) || [];
@@ -42,7 +39,6 @@
       console.error("Błąd danych klinik:", e);
     }
 
-    // Inicjalizacja mapy (na start Warszawa)
     const map = L.map('map').setView([52.2297, 21.0122], 12);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -52,16 +48,29 @@
 
     const bounds = [];
 
-    // Dodawanie klinik
-    clinics.forEach(clinic => {
+clinics.forEach(clinic => {
       if (clinic.latitude && clinic.longitude) {
         const loc = [clinic.latitude, clinic.longitude];
-        L.marker(loc).addTo(map).bindPopup(`<b>${clinic.name}</b><br>${clinic.address}`);
+        
+        const appointmentUrl = `/appointments/new?clinic_id=${clinic.id}`;
+        
+        const popupContent = `
+          <div style="text-align: center; font-family: sans-serif;">
+            <b style="font-size: 1.1rem; color: #111827;">${clinic.name}</b><br>
+            <span style="color: #6b7280; font-size: 0.9rem;">${clinic.address}</span><br>
+            <hr style="margin: 10px 0; border: 0; border-top: 1px solid #eee;">
+            <a href="${appointmentUrl}" 
+               style="display: inline-block; background: #2563eb; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.8rem;">
+               Umów wizytę
+            </a>
+          </div>
+        `;
+
+        L.marker(loc).addTo(map).bindPopup(popupContent);
         bounds.push(loc);
       }
     });
 
-    // Próba geolokalizacji użytkownika
     map.locate({setView: false, maxZoom: 14});
 
     map.on('locationfound', function(e) {
@@ -76,11 +85,9 @@
       if (bounds.length > 0) map.fitBounds(bounds, {padding: [50, 50]});
     });
 
-    // Ostateczne wymuszenie rozmiaru
     setTimeout(() => { map.invalidateSize(); }, 400);
   }
 
-  // Obsługa Turbo i ładowania
   document.addEventListener("turbo:load", initMap);
   if (document.readyState === "complete") initMap();
 </script>

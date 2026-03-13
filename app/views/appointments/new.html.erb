@@ -1,0 +1,52 @@
+<style>
+  .form-container { max-width: 500px; margin: 40px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #374151; }
+  .form-control { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; }
+  .btn-submit { width: 100%; background: #2563eb; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+  .btn-submit:hover { background: #1d4ed8; }
+</style>
+
+<div class="form-container">
+  <h2 style="margin-bottom: 5px;">Umów wizytę</h2>
+  <p style="color: #6b7280; margin-bottom: 25px;">Klinika: <strong><%= @clinic.name %></strong></p>
+
+  <%= form_with model: @appointment, local: true do |f| %>
+    <%= hidden_field_tag :clinic_id, @clinic.id %>
+
+    <% if @appointment.errors.any? %>
+      <div style="background-color: #fee2e2; border: 1px solid #ef4444; color: #b91c1c; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+        <strong style="display: block; margin-bottom: 5px;">Formularz zawiera błędy:</strong>
+        <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem;">
+          <% @appointment.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :pet_id, "Wybierz zwierzaka" %>
+      <%= f.collection_select :pet_id, @pets, :id, :name_with_species, { prompt: "Wybierz swojego pupila..." }, { class: "form-control" } %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :vet_id, "Wybierz weterynarza" %>
+      <%= f.collection_select :vet_id, @vets, :id, :full_name, { prompt: "Wybierz lekarza..." }, { class: "form-control" } %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :scheduled_at, "Data i godzina wizyty" %>
+      <%= f.datetime_field :scheduled_at, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :reason, "Powód wizyty" %>
+      <%= f.text_area :reason, rows: 4, class: "form-control", placeholder: "Opisz krótko problem..." %>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit "Potwierdź wizytę", class: "btn-submit" %>
+    </div>
+  <% end %>
+</div>
