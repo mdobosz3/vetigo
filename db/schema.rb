@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_11_104954) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_16_042341) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -63,10 +63,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_11_104954) do
     t.string "breed"
     t.datetime "created_at", null: false
     t.string "name"
-    t.bigint "owner_id", null: false
     t.string "species"
     t.datetime "updated_at", null: false
-    t.index ["owner_id"], name: "index_pets_on_owner_id"
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_pets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -99,7 +99,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_11_104954) do
   add_foreign_key "medical_records", "appointments"
   add_foreign_key "medical_records", "pets"
   add_foreign_key "owners", "clinics"
-  add_foreign_key "pets", "owners"
+  add_foreign_key "pets", "users"
   add_foreign_key "vets", "clinics"
   add_foreign_key "vets", "users"
 end

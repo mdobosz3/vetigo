@@ -36,15 +36,23 @@ new_clinics.each do |clinic|
   end
 
   5.times do
-    owner = clinic.owners.create!(
+    client_email = Faker::Internet.unique.email
+
+    client_user = User.create!(
+      email: client_email,
+      password: 'password123',
+      password_confirmation: 'password123'
+    )
+
+    clinic.owners.create!(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
-      email: Faker::Internet.unique.email,
+      email: client_email,
       phone: Faker::PhoneNumber.phone_number
     )
 
     pets = rand(1..3).times.map do
-      owner.pets.create!(
+      client_user.pets.create!(
         name: Faker::Creature::Dog.name,
         species: [ "Dog", "Cat", "Rabbit", "Hamster", "Parrot" ].sample,
         breed: Faker::Creature::Dog.breed,
@@ -66,10 +74,17 @@ new_clinics.each do |clinic|
   end
 end
 
+User.create!(
+  email: 'admin@vetigo.pl',
+  password: 'password123',
+  password_confirmation: 'password123',
+  admin: true
+)
+
 puts "Seeding complete! Current database counts:"
+puts "Users: #{User.count}"
 puts "Clinics: #{Clinic.count}"
 puts "Vets: #{Vet.count}"
 puts "Owners: #{Owner.count}"
 puts "Pets: #{Pet.count}"
 puts "Appointments: #{Appointment.count}"
-puts "Users: #{User.count}"

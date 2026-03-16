@@ -1,5 +1,4 @@
 class Owner < ApplicationRecord
-  has_many :pets, dependent: :destroy
   belongs_to :clinic
 
   validates :first_name, presence: true

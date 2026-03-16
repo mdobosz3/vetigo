@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :pet do
-    owner
+    user
     name { Faker::Creature::Dog.name }
     species { [ "Dog", "Cat", "Rabbit", "Hamster" ].sample }
     breed { Faker::Creature::Dog.breed }

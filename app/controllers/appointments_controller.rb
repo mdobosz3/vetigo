@@ -11,9 +11,10 @@ class AppointmentsController < ApplicationController
     @appointment.status = "scheduled"
 
     if @appointment.save
+      # ensure_owner_exists_for_clinic
       redirect_to root_path, notice: "Wizyta została pomyślnie umówiona!"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -34,8 +35,15 @@ class AppointmentsController < ApplicationController
     if current_user.admin?
       @pets = Pet.all
     else
-      owner_ids = Owner.where(email: current_user.email).pluck(:id)
-      @pets = Pet.where(owner_id: owner_ids)
+      @pets = current_user.pets
     end
   end
+
+  # def ensure_owner_exists_for_clinic
+  #   Owner.find_or_create_by(clinic_id: @clinic.id, email: current_user.email) do |owner|
+  #     owner.first_name = "Klient"
+  #     owner.last_name = current_user.email.split("@").first.capitalize
+  #     owner.phone = "Brak"
+  #   end
+  # end
 end

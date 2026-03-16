@@ -3,7 +3,9 @@ class Avo::Resources::Pet < Avo::BaseResource
     if current_user.admin?
       query
     elsif current_user.vet.present?
-      query.joins(:owner).where(owners: { clinic_id: current_user.vet.clinic_id })
+      query.joins(appointments: :vet)
+           .where(vets: { clinic_id: current_user.vet.clinic_id })
+           .distinct
     else
       query.none
     end
@@ -17,7 +19,7 @@ class Avo::Resources::Pet < Avo::BaseResource
     field :species, as: :text
     field :breed, as: :text
     field :age, as: :number
-    field :owner, as: :belongs_to
+    field :user, as: :belongs_to
     field :appointments, as: :has_many
     field :medical_records, as: :has_many
   end

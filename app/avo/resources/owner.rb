@@ -19,6 +19,5 @@ class Avo::Resources::Owner < Avo::BaseResource
     field :email, as: :text
     field :phone, as: :text
     field :clinic, as: :belongs_to
-    field :pets, as: :has_many
   end
 end

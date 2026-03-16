@@ -1,5 +1,5 @@
 class Pet < ApplicationRecord
-  belongs_to :owner
+  belongs_to :user
   has_many :appointments, dependent: :destroy
   has_many :medical_records, dependent: :destroy
 
