@@ -11,7 +11,7 @@ class AppointmentsController < ApplicationController
     @appointment.status = "scheduled"
 
     if @appointment.save
-      # ensure_owner_exists_for_clinic
+      ensure_owner_exists_for_clinic
       redirect_to root_path, notice: "Wizyta została pomyślnie umówiona!"
     else
       render :new, status: :unprocessable_content
@@ -39,11 +39,11 @@ class AppointmentsController < ApplicationController
     end
   end
 
-  # def ensure_owner_exists_for_clinic
-  #   Owner.find_or_create_by(clinic_id: @clinic.id, email: current_user.email) do |owner|
-  #     owner.first_name = "Klient"
-  #     owner.last_name = current_user.email.split("@").first.capitalize
-  #     owner.phone = "Brak"
-  #   end
-  # end
+  def ensure_owner_exists_for_clinic
+    Owner.find_or_create_by(clinic_id: @clinic.id, email: current_user.email) do |owner|
+      owner.first_name = current_user.first_name || "Klient"
+      owner.last_name  = current_user.last_name || current_user.email.split("@").first.capitalize
+      owner.phone      = current_user.phone || "Brak numeru"
+    end
+  end
 end

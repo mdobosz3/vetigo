@@ -21,34 +21,46 @@ end
 
 new_clinics.each do |clinic|
   vets = 3.times.map do
+    vet_first_name = Faker::Name.first_name
+    vet_last_name = Faker::Name.last_name
+
     vet_user = User.create!(
       email: Faker::Internet.unique.email,
       password: 'password123',
-      password_confirmation: 'password123'
+      password_confirmation: 'password123',
+      first_name: vet_first_name,
+      last_name: vet_last_name,
+      phone: Faker::PhoneNumber.phone_number
     )
 
     clinic.vets.create!(
       user: vet_user,
-      first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name,
+      first_name: vet_first_name,
+      last_name: vet_last_name,
       specialization: [ "Cardiologist", "Surgeon", "Dentist", "General Practice", "Dermatologist" ].sample
     )
   end
 
   5.times do
     client_email = Faker::Internet.unique.email
+    client_first_name = Faker::Name.first_name
+    client_last_name = Faker::Name.last_name
+    client_phone = Faker::PhoneNumber.phone_number
 
     client_user = User.create!(
       email: client_email,
       password: 'password123',
-      password_confirmation: 'password123'
+      password_confirmation: 'password123',
+      first_name: client_first_name,
+      last_name: client_last_name,
+      phone: client_phone
     )
 
-    clinic.owners.create!(
-      first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name,
+    owner = clinic.owners.create!(
+      first_name: client_first_name,
+      last_name: client_last_name,
       email: client_email,
-      phone: Faker::PhoneNumber.phone_number
+      phone: client_phone
     )
 
     pets = rand(1..3).times.map do
@@ -78,7 +90,10 @@ User.create!(
   email: 'admin@vetigo.pl',
   password: 'password123',
   password_confirmation: 'password123',
-  admin: true
+  admin: true,
+  first_name: 'Admin',
+  last_name: 'Vetigo',
+  phone: '000000000'
 )
 
 puts "Seeding complete! Current database counts:"
