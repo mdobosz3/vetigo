@@ -2,8 +2,18 @@ class AppointmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_form_variables, only: [ :new, :create ]
 
+  def index
+    all_appointments = current_user.appointments.includes(:pet, vet: :clinic)
+
+    @upcoming_appointments = all_appointments.where("scheduled_at >= ?", Time.current).order(scheduled_at: :asc)
+    @past_appointments = all_appointments.where("scheduled_at < ?", Time.current).order(scheduled_at: :desc)
+  end
   def new
     @appointment = Appointment.new
+  end
+
+  def show
+    @appointment = current_user.appointments.find(params[:id])
   end
 
   def create
@@ -16,10 +26,6 @@ class AppointmentsController < ApplicationController
     else
       render :new, status: :unprocessable_content
     end
-  end
-
-  def index
-    @appointments = current_user.appointments.order(scheduled_at: :asc)
   end
 
   private

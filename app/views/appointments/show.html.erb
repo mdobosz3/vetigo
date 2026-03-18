@@ -1,0 +1,55 @@
+<div class="max-w-3xl mx-auto">
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Szczegóły wizyty</h1>
+    <%= link_to "Wróć do listy", appointments_path, class: "text-indigo-600 hover:text-indigo-800 font-semibold text-sm transition-all" %>
+  </div>
+
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-indigo-50 p-8 border-b border-gray-100 flex items-center gap-6">
+      <div class="bg-indigo-600 text-white rounded-full h-20 w-20 flex items-center justify-center font-bold text-4xl shadow-md">
+        <%= @appointment.pet.name.first.upcase %>
+      </div>
+      <div>
+        <h2 class="text-3xl font-bold text-gray-900">
+          <%= @appointment.pet.name %> <span class="text-lg font-medium text-indigo-500">(<%= @appointment.pet.species %>)</span>
+        </h2>
+        <p class="text-indigo-700 mt-1"><%= @appointment.pet.breed.presence || "Mieszaniec" %>, Wiek: <%= @appointment.pet.age %> lat</p>
+      </div>
+    </div>
+
+    <div class="p-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <div>
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Czas i miejsce</h3>
+          <p class="text-lg font-bold text-gray-900 mb-1">
+            <%= @appointment.scheduled_at.strftime("%d.%m.%Y") %>
+          </p>
+          <p class="text-gray-700 font-medium mb-4">
+            Godzina: <%= @appointment.scheduled_at.strftime("%H:%M") %>
+          </p>
+          
+          <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100">
+            <p class="font-bold text-gray-900"><%= @appointment.vet.clinic.name %></p>
+            <p class="text-sm text-gray-600 mt-1"><%= @appointment.vet.clinic.address %></p>
+            <p class="text-sm text-gray-600"><%= @appointment.vet.clinic.city %></p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Lekarz Weterynarii</h3>
+          <p class="text-lg font-bold text-gray-900">
+            <%= @appointment.vet.first_name %> <%= @appointment.vet.last_name %>
+          </p>
+          <p class="text-gray-600 text-sm mb-6"><%= @appointment.vet.specialization %></p>
+
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Powód wizyty</h3>
+          <p class="text-gray-800 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+            <%= @appointment.reason.presence || "Brak podanego powodu przy rejestracji." %>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

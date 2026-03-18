@@ -1,4 +1,65 @@
-<div>
-  <h1 class="font-bold text-4xl">Appointments#index</h1>
-  <p>Find me in app/views/appointments/index.html.erb</p>
+<div class="max-w-4xl mx-auto">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Twoje wizyty</h1>
+    <%= link_to "Umów nową wizytę", root_path, class: "bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full shadow-sm text-sm font-semibold transition-all" %>
+  </div>
+
+  <h2 class="text-xl font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">Nadchodzące wizyty</h2>
+  
+  <% if @upcoming_appointments.any? %>
+    <div class="space-y-4 mb-12">
+      <% @upcoming_appointments.each do |appointment| %>
+        <div class="bg-white rounded-3xl shadow-sm border border-indigo-100 p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:shadow-md transition-all">
+          <div class="flex items-start gap-4">
+            <div class="bg-indigo-50 text-indigo-700 rounded-2xl p-4 text-center min-w-[100px]">
+              <div class="text-sm font-semibold uppercase"><%= appointment.scheduled_at.strftime("%b") %></div>
+              <div class="text-2xl font-black"><%= appointment.scheduled_at.strftime("%d") %></div>
+              <div class="text-xs font-medium mt-1"><%= appointment.scheduled_at.strftime("%H:%M") %></div>
+            </div>
+            
+            <div>
+              <h3 class="text-lg font-bold text-gray-900">
+                <%= appointment.pet.name %> <span class="text-sm font-medium text-indigo-500">(<%= appointment.pet.species %>)</span>
+              </h3>
+              <p class="text-gray-600 text-sm mt-1">
+                <span class="font-semibold">Klinika:</span> <%= appointment.vet.clinic.name %> <br>
+                <span class="font-semibold">Lekarz:</span> <%= appointment.vet.first_name %> <%= appointment.vet.last_name %>
+              </p>
+              <% if appointment.reason.present? %>
+                <p class="text-gray-500 text-sm mt-2 italic">"<%= appointment.reason %>"</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-gray-50 rounded-3xl p-8 text-center text-gray-500 mb-12 border border-gray-100">
+      Nie masz żadnych zaplanowanych wizyt.
+    </div>
+  <% end %>
+
+  <h2 class="text-xl font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">Historia wizyt</h2>
+  
+<% if @past_appointments.any? %>
+    <div class="space-y-4">
+      <% @past_appointments.each do |appointment| %>
+        <%= link_to appointment_path(appointment), class: "block bg-white rounded-3xl border border-gray-200 p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 opacity-75 hover:opacity-100 hover:shadow-md transition-all" do %>
+          <div>
+            <h3 class="font-bold text-gray-800">
+              <%= appointment.pet.name %> <span class="text-xs text-gray-500">(<%= appointment.pet.species %>)</span>
+            </h3>
+            <p class="text-sm text-gray-600"><%= appointment.scheduled_at.strftime("%d.%m.%Y o %H:%M") %> &bull; <%= appointment.vet.clinic.name %></p>
+          </div>
+          <div class="text-indigo-600 font-semibold text-sm">
+            Zobacz szczegóły &rarr;
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-gray-50 rounded-3xl p-8 text-center text-gray-500 border border-gray-100">
+      Historia Twoich wizyt jest jeszcze pusta.
+    </div>
+  <% end %>
 </div>

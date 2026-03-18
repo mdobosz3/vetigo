@@ -3,5 +3,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :pets, dependent: :destroy
+  has_many :appointments, through: :pets
   has_one :vet
 end

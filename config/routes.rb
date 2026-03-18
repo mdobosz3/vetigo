@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root "home#index"
-  resources :appointments, only: [ :new, :create, :index ]
+  resources :appointments
   resources :pets, only: [ :index, :new, :create ]
 
   devise_for :users
