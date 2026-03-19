@@ -19,6 +19,20 @@ class PetsController < ApplicationController
     end
   end
 
+  def edit
+    @pet = current_user.pets.find(params[:id])
+  end
+
+  def update
+    @pet = current_user.pets.find(params[:id])
+
+    if @pet.update(pet_params)
+      redirect_to pets_path, notice: "Pet was successfully updated!"
+    else
+      render :edit, status: :unprocessable_content
+    end
+  end
+
   private
 
   def pet_params

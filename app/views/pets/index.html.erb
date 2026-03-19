@@ -7,21 +7,27 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <% @pets.each do |pet| %>
       <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all">
-        <div class="flex items-center gap-4 mb-4">
-          <div class="bg-indigo-50 text-indigo-600 rounded-full h-14 w-14 flex items-center justify-center font-bold text-2xl">
-            <%= pet.name.first.upcase %>
+        
+        <div class="flex items-start justify-between mb-4">
+          <div class="flex items-center gap-4">
+            <div class="bg-indigo-50 text-indigo-600 rounded-full h-14 w-14 flex items-center justify-center font-bold text-2xl shrink-0">
+              <%= pet.name.first.upcase %>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-gray-900">
+                <%= pet.name %> <span class="text-sm font-medium text-indigo-500">(<%= pet.species %>)</span>
+              </h2>
+              <p class="text-sm text-gray-500"><%= pet.breed.presence || "Mieszaniec" %></p>
+            </div>
           </div>
-          <div>
-            <h2 class="text-xl font-bold text-gray-900">
-              <%= pet.name %> <span class="text-sm font-medium text-indigo-500">(<%= pet.species %>)</span>
-            </h2>
-            <p class="text-sm text-gray-500"><%= pet.breed.presence || "Mieszaniec" %></p>
-          </div>
+          
+          <%= link_to "Edytuj", edit_pet_path(pet), class: "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-indigo-600 px-3 py-1 rounded-full text-xs font-semibold shadow-sm transition-all" %>
         </div>
         
         <div class="text-sm text-gray-700 bg-gray-50 rounded-2xl p-3">
           <p><span class="font-semibold text-gray-500">Wiek:</span> <%= pet.age %> lat</p>
         </div>
+        
       </div>
     <% end %>
   </div>
