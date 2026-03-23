@@ -22,4 +22,16 @@ RSpec.describe Pet, type: :model do
       expect(pet.name_with_species).to eq("Riley (Dog)")
     end
   end
+
+  describe "#age" do
+    it "calculates age correctly based on birth_date" do
+      pet = build(:pet, birth_date: 3.years.ago.to_date)
+      expect(pet.age).to eq(3)
+    end
+
+    it "returns 0 if birth_date is nil" do
+      pet = build(:pet, birth_date: nil)
+      expect(pet.age).to eq(0)
+    end
+  end
 end

@@ -33,7 +33,7 @@ RSpec.describe "Pets", type: :request do
   describe "POST /pets" do
     it "creates a new pet for the logged-in user" do
       expect {
-        post pets_path, params: { pet: { name: "Reksio", species: "Pies", breed: "Kundel", age: 3 } }
+        post pets_path, params: { pet: { name: "Reksio", species: "Pies", breed: "Kundel", birth_date: "2020-05-15" } }
       }.to change(user.pets, :count).by(1)
 
       expect(response).to redirect_to(pets_path)

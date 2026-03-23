@@ -9,4 +9,12 @@ class Pet < ApplicationRecord
   def name_with_species
     "#{name} (#{species})"
   end
+
+  def age
+    return 0 if birth_date.blank?
+    today = Date.current
+    calculated_age = today.year - birth_date.year
+    calculated_age -= 1 if today < birth_date + calculated_age.years
+    calculated_age
+  end
 end

@@ -33,9 +33,9 @@
         <%= f.text_field :breed, class: "w-full rounded-2xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all px-4 py-2" %>
       </div>
 
-      <div>
-        <%= f.label :age, "Wiek (w latach)", class: "block text-sm font-semibold text-gray-700 mb-2" %>
-        <%= f.number_field :age, class: "w-full rounded-2xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all px-4 py-2" %>
+      <div class="mb-6">
+        <%= f.label :birth_date, "Date of birth", class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.date_field :birth_date, class: "w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
       </div>
 
       <div class="pt-6 flex items-center justify-end gap-4 border-t border-gray-100 mt-8">

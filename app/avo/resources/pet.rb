@@ -18,7 +18,7 @@ class Avo::Resources::Pet < Avo::BaseResource
     field :name, as: :text
     field :species, as: :text
     field :breed, as: :text
-    field :age, as: :number
+    field :birth_date, as: :date
     field :user, as: :belongs_to
     field :appointments, as: :has_many
     field :medical_records, as: :has_many
