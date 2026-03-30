@@ -1,5 +1,5 @@
 <div class="max-w-2xl mx-auto py-8">
-  <h1 class="text-3xl font-extrabold text-gray-900 mb-6">Edit Pet</h1>
+  <h1 class="text-3xl font-extrabold text-gray-900 mb-6">Edytuj zwierzaka</h1>
 
   <%= form_with(model: @pet, class: "bg-white p-6 rounded-3xl shadow-sm border border-gray-100") do |form| %>
     <% if @pet.errors.any? %>
@@ -13,28 +13,28 @@
     <% end %>
 
     <div class="mb-4">
-      <%= form.label :name, class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.label :name, "Imię", class: "block text-sm font-medium text-gray-700 mb-1" %>
       <%= form.text_field :name, class: "w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :species, class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.label :species, "Gatunek", class: "block text-sm font-medium text-gray-700 mb-1" %>
       <%= form.text_field :species, class: "w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
     </div>
     
     <div class="mb-4">
-      <%= form.label :breed, class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.label :breed, "Rasa", class: "block text-sm font-medium text-gray-700 mb-1" %>
       <%= form.text_field :breed, class: "w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
     </div>
 
     <div class="mb-6">
-      <%= form.label :birth_date, "Date of birth", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.label :birth_date, "Data urodzenia", class: "block text-sm font-medium text-gray-700 mb-1" %>
       <%= form.date_field :birth_date, class: "w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
     </div>
 
     <div class="flex gap-4">
-      <%= form.submit "Save changes", class: "bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full shadow-sm text-sm font-semibold transition-all cursor-pointer" %>
-      <%= link_to "Cancel", pets_path, class: "bg-gray-100 hover:bg-gray-200 text-gray-800 px-6 py-2 rounded-full shadow-sm text-sm font-semibold transition-all" %>
+      <%= form.submit "Zapisz zmiany", class: "bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full shadow-sm text-sm font-semibold transition-all cursor-pointer" %>
+      <%= link_to "Anuluj", pets_path, class: "bg-gray-100 hover:bg-gray-200 text-gray-800 px-6 py-2 rounded-full shadow-sm text-sm font-semibold transition-all" %>
     </div>
   <% end %>
 </div>
