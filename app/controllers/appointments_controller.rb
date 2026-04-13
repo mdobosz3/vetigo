@@ -17,13 +17,16 @@ class AppointmentsController < ApplicationController
   end
 
   def create
-    @appointment = Appointment.new(appointment_params)
-    @appointment.status = "scheduled"
+    service = CreateAppointmentService.new(
+      appointment_params: appointment_params,
+      user: current_user,
+      clinic_id: params[:clinic_id]
+    )
 
-    if @appointment.save
-      ensure_owner_exists_for_clinic
-      redirect_to root_path, notice: "Wizyta została pomyślnie umówiona!"
+    if service.call
+      redirect_to appointments_path, notice: "Wizyta została umówiona! Wysłaliśmy e-mail z potwierdzeniem."
     else
+      @appointment = service.appointment
       render :new, status: :unprocessable_content
     end
   end
@@ -42,14 +45,6 @@ class AppointmentsController < ApplicationController
       @pets = Pet.all
     else
       @pets = current_user.pets
-    end
-  end
-
-  def ensure_owner_exists_for_clinic
-    Owner.find_or_create_by(clinic_id: @clinic.id, email: current_user.email) do |owner|
-      owner.first_name = current_user.first_name || "Klient"
-      owner.last_name  = current_user.last_name || current_user.email.split("@").first.capitalize
-      owner.phone      = current_user.phone || "Brak numeru"
     end
   end
 end
