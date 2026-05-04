@@ -1,12 +1,14 @@
 class AppointmentMailer < ApplicationMailer
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.appointment_mailer.appointment_confirmation.subject
-  #
-  def appointment_confirmation
-    @greeting = "Hi"
+  default from: "notifications@vetigo.pl"
 
-    mail to: "to@example.org"
+  def appointment_confirmation
+    @appointment = params[:appointment]
+    @pet = @appointment.pet
+    @owner = @pet.user
+
+    mail(
+      to: @owner.email,
+      subject: "Potwierdzenie wizyty: #{@pet.name_with_species}"
+    )
   end
 end

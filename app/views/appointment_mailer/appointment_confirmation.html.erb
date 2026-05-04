@@ -1,5 +1,23 @@
-<h1>Appointment#appointment_confirmation</h1>
+<div class="email-container" style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+  <h2>Witaj, <%= @owner.first_name %> <%= @owner.last_name %>!</h2>
 
-<p>
-  <%= @greeting %>, find me in app/views/appointment_mailer/appointment_confirmation.html.erb
-</p>
+  <p>Potwierdzamy pomyślne umówienie wizyty w naszej klinice dla Twojego pupila: <strong><%= @pet.name_with_species %></strong>.</p>
+
+  <div class="appointment-details" style="background-color: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+    <h3 style="margin-top: 0; color: #4f46e5;">Szczegóły wizyty:</h3>
+    <ul style="list-style-type: none; padding: 0; margin: 0;">
+      <li style="margin-bottom: 10px;">
+        <strong>Data i godzina:</strong> 
+        <%= @appointment.scheduled_at.strftime("%d.%m.%Y o %H:%M") %>
+      </li>
+      <li>
+        <strong>Powód wizyty:</strong> 
+        <%= @appointment.reason %>
+      </li>
+    </ul>
+  </div>
+
+  <p>Jeśli musisz odwołać lub przełożyć wizytę, prosimy o kontakt z kliniką.</p>
+  
+  <p>Do zobaczenia!<br>Zespół Vetigo</p>
+</div>
