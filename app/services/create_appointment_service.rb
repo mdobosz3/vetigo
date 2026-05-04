@@ -12,6 +12,7 @@ class CreateAppointmentService
   def call
     if @appointment.save
       ensure_owner_exists_for_clinic
+      send_confirmation_email
       true
     else
       false
